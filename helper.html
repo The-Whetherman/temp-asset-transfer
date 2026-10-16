@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><title>helper</title></head>
+<body>
+<script>
+(async () => {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/The-Whetherman/temp-asset-transfer/main/motoko_for_mixamo.fbx');
+    const buf = await res.arrayBuffer();
+    if (window.opener) {
+      window.opener.postMessage({ type: 'motoko-fbx', buf }, '*');
+      document.body.innerText = 'sent ' + buf.byteLength + ' bytes to opener';
+    } else {
+      document.body.innerText = 'no opener window';
+    }
+  } catch (e) {
+    document.body.innerText = 'ERROR: ' + e.message;
+  }
+})();
+</script>
+</body>
+</html>
